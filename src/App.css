@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: santokki;
+  src: url("./font/HSSantokki-Regular.ttf");
+}
+@font-face {
+  font-family: regular;
+  src: url("./font/Regular.ttf");
+}
