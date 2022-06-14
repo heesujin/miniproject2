@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import bob from "./image/밥그릇.png";
 import logo from "./image/오늘뭐먹지logo.png";
 import { useEffect } from "react";
+import korea from "./image/한식.PNG";
+import japan from "./image/일식.PNG";
+import western from "./image/동남아 음식.PNG";
+import southeastasia from "./image/양식.PNG";
+import china from "./image/중식.PNG";
 
 function Main() {
-  const Foods = ["한식", "중식", "양식", "일식", "아시안"];
+  const Foods = ["한식", "중식", "양식", "일식", "동남아 음식"];
 
   function random(n) {
     return Math.floor(Math.random() * n);
@@ -41,18 +46,21 @@ function Main() {
       <Boxes>
         <Box>
           <Link to={"./korean"} style={{ textDecoration: "none" }}>
+            <FoodImg src={korea} />
             <Text>한식</Text>
           </Link>
         </Box>
 
         <Box>
           <Link to={"./chinese"} style={{ textDecoration: "none" }}>
+            <FoodImg src={china} />
             <Text>중식</Text>
           </Link>
         </Box>
 
         <Box>
           <Link to={"./western"} style={{ textDecoration: "none" }}>
+            <FoodImg src={western} />
             <Text>양식</Text>
           </Link>
         </Box>
@@ -60,23 +68,31 @@ function Main() {
       <DivBox>
         <Box>
           <Link to={"./japan"} style={{ textDecoration: "none" }}>
+            <FoodImg src={japan} />
             <Text>일식</Text>
           </Link>
         </Box>
         <Box>
           <Link to={"./southeastasia"} style={{ textDecoration: "none" }}>
+            <FoodImg src={southeastasia} />
             <Text>동남아 음식</Text>
           </Link>
         </Box>
         <Box>
           <Link to={"/myrecife"} style={{ textDecoration: "none" }}>
-            <Text>나만의 레시피</Text>
+            <Texts>나만의 레시피</Texts>
           </Link>
         </Box>
       </DivBox>
     </Component>
   );
 }
+
+const FoodImg = styled.img`
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+`;
 
 const Hd = styled.div`
   display: block;
@@ -181,6 +197,13 @@ const Box = styled.div`
 `;
 
 const Text = styled.h1`
+  margin-top: -130px;
+  text-decoration: none;
+  color: white;
+  text-shadow: 2px 2px 2px #000;
+`;
+
+const Texts = styled.h1`
   margin-top: 80px;
   text-decoration: none;
   color: white;

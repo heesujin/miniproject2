@@ -177,7 +177,7 @@ const Text = styled.h1`
   margin-top: -125px;
   color: white;
   text-decoration: none;
-  text-shadow: 1px 1px 1px #000;
+  text-shadow: 2px 2px 2px #000;
 `;
 
 export default MyRecife;

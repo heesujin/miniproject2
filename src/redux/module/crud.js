@@ -55,6 +55,10 @@ export const recipeUpload = (recipeInfo) => {
     //   axios.post("http://api/board/write",recipeInfo)
     axios.post("http://localhost:5001/recipe", recipeInfo).then((response) => {
       console.log(response);
+
+      const newrecipe = { id: response.id, ...recipeInfo };
+      // console.log(newrecipe);
+      dispacth(recipeAdd(newrecipe));
     });
     //데이터 베이스 갔다가 와서 불러오기 + 새 스테이트 전체 저장
     //  try {
@@ -62,10 +66,6 @@ export const recipeUpload = (recipeInfo) => {
     // } catch{
 
     // }
-
-    const newrecipe = { ...recipeInfo };
-    // console.log(newrecipe);
-    dispacth(recipeAdd(newrecipe));
   };
 };
 
