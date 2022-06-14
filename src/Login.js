@@ -1,7 +1,27 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { useRef } from "react";
+import { logIn } from "./redux/module/login";
+import React from "react";
 
 function Login() {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate()
+
+  const user_id = React.useRef(null);
+  const user_pw = React.useRef(null);
+
+  const loginCheck = () => {
+    dispatch(
+      logIn({
+        username: user_id.current.value,
+        password: user_pw.current.value,
+      })
+    );
+  };
+
   return (
     <div>
       <Upper>
@@ -21,12 +41,23 @@ function Login() {
       <All>
         <Title>로그인</Title>
         <Stitle>ID</Stitle>
-        <Input placeholder="아이디를 작성해주세요" />
+        <Input ref={user_id} placeholder="아이디를 작성해주세요" />
         <br />
         <Stitle>PASSWORD</Stitle>
-        <Input placeholder="비밀번호를 작성해주세요" type="password" /> <br />
+        <Input
+          ref={user_pw}
+          placeholder="비밀번호를 작성해주세요"
+          type="password"
+        />{" "}
+        <br />
         <Link to={"/"}>
-          <Btn>로그인</Btn>
+          <Btn
+            onClick={() => {
+              loginCheck();
+            }}
+          >
+            로그인
+          </Btn>
         </Link>
       </All>
     </div>

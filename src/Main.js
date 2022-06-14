@@ -2,18 +2,19 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import bob from "./image/밥그릇.png";
 import logo from "./image/오늘뭐먹지logo.png";
+import { useEffect } from "react";
 
 function Main() {
-  // const Foods = ["한식", "중식", "양식", "일식", "아시안"];
+  const Foods = ["한식", "중식", "양식", "일식", "아시안"];
 
-  // function random(n) {
-  //   return Math.floor(Math.random() * n);
-  // }
+  function random(n) {
+    return Math.floor(Math.random() * n);
+  }
 
-  // function generateRandomHand() {
-  //   const idx = random(Foods.length);
-  //   return Foods[idx];
-  // }
+  function generateRandomHand() {
+    const idx = random(Foods.length);
+    return Foods[idx];
+  }
 
   return (
     <Component>
@@ -34,32 +35,43 @@ function Main() {
         </div>
 
         <Random>
-          오늘 <span>중식</span> 어때?
+          오늘 <span>{generateRandomHand()}</span> 어때?
         </Random>
       </Hd>
       <Boxes>
         <Box>
-          <Text>한식</Text>
+          <Link to={"./korean"} style={{ textDecoration: "none" }}>
+            <Text>한식</Text>
+          </Link>
         </Box>
-        <Link to={"./category"} style={{ textDecoration: "none" }}>
-          <Box>
-            <Text>중식</Text>
-          </Box>
-        </Link>
 
         <Box>
-          <Text>양식</Text>
+          <Link to={"./chinese"} style={{ textDecoration: "none" }}>
+            <Text>중식</Text>
+          </Link>
+        </Box>
+
+        <Box>
+          <Link to={"./western"} style={{ textDecoration: "none" }}>
+            <Text>양식</Text>
+          </Link>
         </Box>
       </Boxes>
       <DivBox>
         <Box>
-          <Text>일식</Text>
+          <Link to={"./japan"} style={{ textDecoration: "none" }}>
+            <Text>일식</Text>
+          </Link>
         </Box>
         <Box>
-          <Text>아시안</Text>
+          <Link to={"./southeastasia"} style={{ textDecoration: "none" }}>
+            <Text>동남아 음식</Text>
+          </Link>
         </Box>
         <Box>
-          <Text>나만의 레시피</Text>
+          <Link to={"/myrecife"} style={{ textDecoration: "none" }}>
+            <Text>나만의 레시피</Text>
+          </Link>
         </Box>
       </DivBox>
     </Component>
@@ -171,7 +183,8 @@ const Box = styled.div`
 const Text = styled.h1`
   margin-top: 80px;
   text-decoration: none;
-  color: black;
+  color: white;
+  text-shadow: 2px 2px 2px #000;
 `;
 
 export default Main;

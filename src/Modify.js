@@ -1,8 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+// import FormControl from "react-bootstrap/Card";
+import { recipeUpdate } from "./redux/module/crud";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Modify() {
+  const [imageSrc, setImageSrc] = React.useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const comment = React.useRef(null);
+  const title = React.useRef(null);
+
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+  // console.log(imageSrc);
+
+  const parm = useParams();
+
+  const recipe_list = useSelector((state) => state.crud.list);
+
+  const recipe_idx = recipe_list.findIndex((index) => {
+    return index.id == parseInt(parm.id);
+  });
+  console.log(recipe_idx);
+  const orginImage = recipe_list[recipe_idx].image;
+  console.log(recipe_list[recipe_idx].contents);
+
+  const newRecipe = () => {
+    dispatch(
+      recipeUpdate({
+        contents:
+          comment.current.value == ""
+            ? recipe_list[recipe_idx].contents
+            : comment.current.value,
+        image: imageSrc == null ? orginImage : imageSrc,
+        title:
+          title.current.value == ""
+            ? recipe_list[recipe_idx].title
+            : title.current.value,
+        id: recipe_list[recipe_idx].id,
+      })
+    );
+    navigate("/");
+  };
+
   return (
     <div>
       <Upper>
@@ -15,17 +67,36 @@ function Modify() {
       </Upper>
       <All>
         <Title>수정하기</Title>
-        <Stitle>IMAGE</Stitle>
-        <Input type="file" />
-        <br />
         <Stitle>FOOD</Stitle>
-        <Input type="text" placeholder="음식의 이름을 입력해주세요" />
+        <Input
+          ref={title}
+          type="text"
+          placeholder="음식의 이름을 입력해주세요"
+        />
+        <br />
+        <Stitle>IMAGE</Stitle>
+        <Input
+          onChange={(e) => {
+            encodeFileToBase64(e.target.files[0]);
+          }}
+          type="file"
+        />
         <br />
         <Stitle>COMMENTS</Stitle>{" "}
-        <Textarea type="textarea" placeholder="레시피를 입력해 주세요." />
+        <Textarea
+          ref={comment}
+          type="textarea"
+          placeholder="레시피를 입력해 주세요."
+        />
         <br />
-        <Link to={"/"}>
-          <Btn>수정하기</Btn>
+        <Link to={"/myrecife"}>
+          <Btn
+            onClick={() => {
+              newRecipe();
+            }}
+          >
+            수정하기
+          </Btn>
         </Link>
       </All>
     </div>

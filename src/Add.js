@@ -1,8 +1,48 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { recipeUpload } from "./redux/module/crud";
 
 function Modify() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [imageSrc, setImageSrc] = React.useState("");
+
+  const comment = React.useRef(null);
+  const title = React.useRef(null);
+
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const recipe = () => {
+    dispatch(
+      recipeUpload({
+        contents: comment.current.value,
+        image: imageSrc,
+        title: title.current.value,
+      })
+    );
+    navigate("/");
+  };
+  // 닉네임 추가?????
+  // console.log(imageSrc)
+  //  window.setTimeout(() => {
+  //     console.log(
+  //         comment.current.value,
+  //         )
+  // }, 5000);
+
   return (
     <div>
       <Upper>
@@ -16,16 +56,35 @@ function Modify() {
       <All>
         <Title>레시피 작성</Title>
         <Stitle>IMAGE</Stitle>
-        <Input type="file" />
+        <Input
+          type="file"
+          onChange={(e) => {
+            encodeFileToBase64(e.target.files[0]);
+          }}
+        />
         <br />
         <Stitle>FOOD</Stitle>
-        <Input type="text" placeholder="음식의 이름을 입력해주세요" />
+        <Input
+          ref={title}
+          type="text"
+          placeholder="음식의 이름을 입력해주세요"
+        />
         <br />
         <Stitle>COMMENTS</Stitle>{" "}
-        <Textarea type="textarea" placeholder="레시피를 입력해 주세요." />
+        <Textarea
+          ref={comment}
+          type="textarea"
+          placeholder="레시피를 입력해 주세요."
+        />
         <br />
-        <Link to={"/"}>
-          <Btn>수정하기</Btn>
+        <Link to={"/myrecife"}>
+          <Btn
+            onClick={() => {
+              recipe();
+            }}
+          >
+            추가하기
+          </Btn>
         </Link>
       </All>
     </div>

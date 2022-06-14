@@ -1,17 +1,34 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import React from "react";
+
 import bob from "./image/밥그릇.png";
 import logo from "./image/오늘뭐먹지logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { recipeLoadSV } from "./redux/module/crud";
 
 function MyRecife() {
+  React.useEffect(() => {
+    dispatch(recipeLoadSV());
+  });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const recipe_list = useSelector((state) => state.crud.list);
+  console.log(recipe_list);
+
   return (
     <Component>
       <Hd>
-        <div>
-          <BobImg src={bob} alt="" />
-        </div>
+        <Link to={"/"}>
+          <div>
+            <BobImg src={bob} alt="" />
+          </div>
+        </Link>
+
         <Btns>
-          <Link to={"/signup"}>
+          <Link to={"/add"}>
             <Btn>ADD RECIPE</Btn>
           </Link>
           <Link to={"/"}>
@@ -24,94 +41,16 @@ function MyRecife() {
 
         <Random>나만의 특별한 레시피를 공유해보자</Random>
       </Hd>
-      <Boxes>
-        <Box>
-          <Link to={"/detail"}>
-            <FoodImg
-              src="https://i.ytimg.com/vi/Yn8ZFTBCJJQ/maxresdefault.jpg"
-              alt="짜장면"
-            />
-
-            <Text>짜장면</Text>
-          </Link>
-        </Box>
-
-        <Box>
-          <FoodImg
-            src="https://img.siksinhot.com/seeon/1637896057710109.jpg"
-            alt="짬뽕"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=짬뽕">
-            <Text>짬뽕</Text>
-          </Youtube>
-        </Box>
-        <Box>
-          <FoodImg
-            src="https://w.namu.la/s/1bfbdabde6f79ac2f05843636edaa87a8e03419bf86205eabe0e33e76c16b1a02be6d9458d5fe7ab418ce21dc1eb3a831f20c8ba793514b71773858a625cdb63f8a2e67d5afe0de42f187499c7058d48a8414df8a68a31ab9d4bf7c70448e028"
-            alt="탕수육"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=탕수육">
-            <Text>탕수육</Text>
-          </Youtube>
-        </Box>
-      </Boxes>
       <DivBox>
-        <Box>
-          <FoodImg
-            src="https://img-cf.kurly.com/shop/data/goodsview/20211026/gv30000237325_1.jpg"
-            alt="볶음밥"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=볶음밥">
-            <Text>볶음밥</Text>
-          </Youtube>
-        </Box>
-        <Box>
-          <FoodImg
-            src="https://t1.daumcdn.net/liveboard/dailylife/7e239e8f47dd47a9bd1ffb9079b3cfa0.jpg"
-            alt="양꼬치"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=양꼬치">
-            <Text>양꼬치</Text>
-          </Youtube>
-        </Box>
-        <Box>
-          <FoodImg
-            src="https://ientree.com/data/item/1629262546/1200x.jpg"
-            alt="깐쇼새우"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=깐쇼새우">
-            <Text>깐쇼새우</Text>
-          </Youtube>
-        </Box>
-      </DivBox>
-      <DivBox>
-        <Box>
-          <FoodImg
-            src="https://530easycook.co.kr/web/product/tiny/202106/cc7774e46be4258b5d2923ff996a4de6.jpg"
-            alt="마라탕"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=마라탕">
-            <Text>마라탕</Text>
-          </Youtube>
-        </Box>
-        <Box>
-          <FoodImg
-            src="https://img.famtimes.co.kr/resources/2018/07/03/nc4bl2UsUIxK9Ulo.jpg"
-            alt="팔보채"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=팔보채">
-            <Text>팔보채</Text>
-          </Youtube>
-        </Box>
-        <Box>
-          <FoodImg
-            src="https://recipe1.ezmember.co.kr/cache/recipe/2015/10/25/47e8080f901ecc25a1f0e7947d2b1ee21.jpg"
-            alt="깐풍기"
-          />
-          <Youtube href="https://www.youtube.com/results?search_query=깐풍기">
-            <Text>깐풍기</Text>
-          </Youtube>
-        </Box>
+        {recipe_list.map((item, index) => (
+          <Box key={index}>
+            <Link to={`/detail/${item.id}`} style={{ textDecoration: "none" }}>
+              <FoodImg src={item.image} />
+
+              <Text>{item.title}</Text>
+            </Link>
+          </Box>
+        ))}
       </DivBox>
     </Component>
   );
@@ -136,7 +75,7 @@ const Hd = styled.div`
 `;
 
 const FoodImg = styled.img`
-  width: 200px;
+  width: 256px;
   height: 200px;
   border-radius: 10px;
 `;
@@ -176,63 +115,69 @@ const Random = styled.h1`
   font-size: 60px;
 `;
 
-const Boxes = styled.div`
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
+// const Boxes = styled.div`
+//   display: flex;
+//   margin-left: auto;
+//   margin-right: auto;
 
-  /* background-color: brown; */
-  width: 1024px;
-  /* height: 600px; */
-  @media (max-width: 1024px) {
-    //769px~1024px
-    width: 768px;
-  }
-  @media (max-width: 768px) {
-    //~768px
-    width: 100%;
-  }
+//   /* background-color: brown; */
+//   width: 1024px;
+//   /* height: 600px; */
+//   @media (max-width: 1024px) {
+//     //769px~1024px
+//     width: 768px;
+//   }
+//   @media (max-width: 768px) {
+//     //~768px
+//     width: 100%;
+//   }
 
-  margin-top: 250px;
-`;
+//   margin-top: 250px;
+// `;
 
 const DivBox = styled.div`
+  /* flex-direction: row; */
   display: flex;
+  flex-wrap: wrap;
   margin-left: auto;
   margin-right: auto;
 
-  /* background-color: brown; */
+  margin-top: 180px;
+  width: 1024px;
+
+  /* background-color: brown;
   width: 1024px;
   /* height: 600px; */
-  @media (max-width: 1024px) {
-    //769px~1024px
-    width: 768px;
-  }
-  @media (max-width: 768px) {
-    //~768px
-    width: 100%;
-  }
-
-  margin-top: 150px;
+  // @media (max-width: 1024px) {
+  //769px~1024px
+  //  width: 768px;
+  // }
+  //@media (max-width: 768px) {
+  //~768px
+  //   width: 100%;
+  // } */
 `;
 
 const Box = styled.div`
   text-align: center;
   margin: auto;
+
   border: 2px solid black;
   border-radius: 10px;
-  width: 200px;
+
   height: 200px;
+
+  float: left;
+  width: 25%;
+
+  margin-top: 100px;
 `;
 
 const Text = styled.h1`
   margin-top: -125px;
   color: white;
   text-decoration: none;
-`;
-
-const Youtube = styled.a`
-  text-decoration: none;
+  text-shadow: 1px 1px 1px #000;
 `;
 
 export default MyRecife;
