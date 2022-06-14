@@ -8,6 +8,7 @@ import japan from "./image/일식.PNG";
 import western from "./image/동남아 음식.PNG";
 import southeastasia from "./image/양식.PNG";
 import china from "./image/중식.PNG";
+import myrecife from "./image/나만의 레시피.PNG";
 
 function Main() {
   const Foods = ["한식", "중식", "양식", "일식", "동남아 음식"];
@@ -80,7 +81,7 @@ function Main() {
         </Box>
         <Box>
           <Link to={"/myrecife"} style={{ textDecoration: "none" }}>
-            <Texts>나만의 레시피</Texts>
+            <FoodImg src={myrecife} />
           </Link>
         </Box>
       </DivBox>
