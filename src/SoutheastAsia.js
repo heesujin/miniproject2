@@ -46,7 +46,7 @@ function SoutheastAsia() {
         </div>
 
         <Random>
-          오늘 <span>쌀국수</span> 어때?
+          오늘 <span>generateRandomHand()</span> 어때?
         </Random>
       </Hd>
       <Boxes>

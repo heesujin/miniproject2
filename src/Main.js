@@ -5,8 +5,8 @@ import logo from "./image/오늘뭐먹지logo.png";
 import { useEffect } from "react";
 import korea from "./image/한식.PNG";
 import japan from "./image/일식.PNG";
-import western from "./image/동남아 음식.PNG";
-import southeastasia from "./image/양식.PNG";
+// import western from "./image/양식.PNG";
+import southeastasia from "./image/동남아 음식.PNG";
 import china from "./image/중식.PNG";
 import myrecife from "./image/나만의 레시피.PNG";
 
@@ -61,7 +61,7 @@ function Main() {
 
         <Box>
           <Link to={"./western"} style={{ textDecoration: "none" }}>
-            <FoodImg src={western} />
+            <FoodImg src={require("./image/양식.PNG")} />
             <Text>양식</Text>
           </Link>
         </Box>
@@ -199,13 +199,6 @@ const Box = styled.div`
 
 const Text = styled.h1`
   margin-top: -130px;
-  text-decoration: none;
-  color: white;
-  text-shadow: 2px 2px 2px #000;
-`;
-
-const Texts = styled.h1`
-  margin-top: 80px;
   text-decoration: none;
   color: white;
   text-shadow: 2px 2px 2px #000;

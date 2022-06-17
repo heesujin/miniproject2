@@ -83,7 +83,7 @@ export const recipeUpdate = (recipeRepair) => {
     // console.log(_recipe_list ,"리스트다아아아")
     const recipe_index = _recipe_list.findIndex((_recipe) => {
       //    console.log(_recipe.id,recipeRepair.id ,"앞쪽이 불러온거" )
-      return _recipe.id === recipeRepair.id;
+      return _recipe.id == recipeRepair.id;
     });
     dispacth(recipeUPDATE(recipeRepair, recipe_index));
     // console.log(recipe_index, "인덱스 반횐받은값")
@@ -102,7 +102,7 @@ export const recipeDelete = (recipeDelete) => {
     // console.log(_recipe_list, "리스트다아아아")
     const recipe_index = _recipe_list.findIndex((_recipe) => {
       //    console.log(_recipe.id,recipeRepair.id ,"앞쪽이 불러온거" )
-      return _recipe.id === recipeDelete;
+      return _recipe.id == recipeDelete;
     });
     dispacth(recipeDELETE(recipe_index));
     console.log(recipe_index, "인덱스 반횐받은값");
@@ -120,7 +120,7 @@ export default function reducer(state = initialState, action = {}) {
     case "recipe/UPDATE": {
       const new_recipe_list = state.list.map((item, index) => {
         // console.log(action, "이게 맞아야할텐데")
-        if (parseInt(action.recipe_index) === index) {
+        if (parseInt(action.recipe_index) == index) {
           return {
             contents: action.recipeRepair.contents,
             image: action.recipeRepair.image,
@@ -134,7 +134,7 @@ export default function reducer(state = initialState, action = {}) {
     }
     case "recipe/DELETE": {
       const new_recipe_list = state.list.filter((item, index) => {
-        return parseInt(action.recipe_index) !== index;
+        return parseInt(action.recipe_index) != index;
       });
       // console.log("지웠어!", new_recipe_list)
       return { list: new_recipe_list };

@@ -57,6 +57,12 @@ export const signUP = (userInfo) => {
     axios
       .post("http://localhost:8080/user/register", userInfo)
       .then((response) => {
+        if (response.data == 1) {
+          window.alert("회원가입완료!");
+          window.location.replace("/");
+        } else {
+          window.alert("중복된 id가 존재합니다");
+        }
         console.log(response);
       });
   };
@@ -65,9 +71,18 @@ export const signUP = (userInfo) => {
 export const logIn = (loginInfo) => {
   return function (dispacth) {
     axios
-      .post("http://localhost:8080/user/login", loginInfo)
+      .post("http://localhost:8080/user/login", loginInfo, {
+        withCredentials: true,
+      })
       .then((response) => {
-        console.log(response);
+        if (response.data.result) {
+          window.alert("로그인 성공");
+          window.location.replace("/");
+        } else {
+          window.alert("아이디와 비밀번호를 확인해주세요!");
+        }
+
+        console.log(response.data.result);
       });
   };
 

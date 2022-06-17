@@ -4,6 +4,27 @@ import bob from "./image/밥그릇.png";
 import logo from "./image/오늘뭐먹지logo.png";
 
 function Chinese() {
+  const Foods = [
+    "짜장면",
+    "짬뽕",
+    "탕수육",
+    "마라탕",
+    "볶음밥",
+    "양꼬치",
+    "깐쇼새우",
+    "팔보채",
+    "깐풍기",
+  ];
+
+  function random(n) {
+    return Math.floor(Math.random() * n);
+  }
+
+  function generateRandomHand() {
+    const idx = random(Foods.length);
+    return Foods[idx];
+  }
+
   return (
     <Component>
       <Hd>
@@ -25,7 +46,7 @@ function Chinese() {
         </div>
 
         <Random>
-          오늘 <span>짜장면</span> 어때?
+          오늘 <span>{generateRandomHand()}</span> 어때?
         </Random>
       </Hd>
       <Boxes>
